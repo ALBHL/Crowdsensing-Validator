@@ -39,7 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:background="#5B69E9"
+        android:background="@drawable/rounded_purple_button"
         android:text="Log In"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/password_edittext_login"

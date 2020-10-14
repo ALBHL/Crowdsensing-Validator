@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
                 d("Main", "Successfully create user with uid: ${ it.result?.user?.uid }")
             }
             .addOnFailureListener {
-                d("Main", "Fail to create user: ${it.message}")
+                d("Main", "Failed to create user: ${it.message}")
+                Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
