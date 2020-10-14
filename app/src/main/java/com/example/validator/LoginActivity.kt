@@ -1,5 +1,6 @@
 package com.example.validator
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -29,7 +30,8 @@ class LoginActivity:AppCompatActivity() {
 
                     // else successful
                     Log.d("Login", "Successfully create user with uid: ${it.result?.user?.uid}")
-
+                    val intent = Intent(this, InOutboxActivity::class.java)
+                    startActivity(intent)
                 }
                 .addOnFailureListener {
                     Log.d("Login", "Failed to log in: ${it.message}")
