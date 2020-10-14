@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "874882528942",
+    "firebase_url": "https://mobile-crowdsensing.firebaseio.com",
+    "project_id": "mobile-crowdsensing",
+    "storage_bucket": "mobile-crowdsensing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874882528942:android:153188664dd62fc1c5df3f",
+        "android_client_info": {
+          "package_name": "com.example.validator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874882528942-hc0n9rvbm6ipmlu5vt9bhibobp7hffvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0b-YjZQPglIETPHf0GCxVqTRCRxWS1l8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874882528942-hc0n9rvbm6ipmlu5vt9bhibobp7hffvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
