@@ -66,26 +66,26 @@ class RegisterActivity : AppCompatActivity() {
 //    private fun uploadDataToFirebaseStorage() {
 //    }
 
-//    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
-//        val uid = FirebaseAuth.getInstance().uid ?: ""
-//        d("RegisterActivity","UUID: $uid")
-//        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-//        d("RegisterActivity","Ref: $ref")
-//
-//
-////        val user = User(uid, username_edittext_reg.text.toString(), profileImageUrl)
-//
-//        ref.setValue("hello")
-//            .addOnCanceledListener {
-//                d("RegisterActivity", "cancelled")
-//            }
-//            .addOnSuccessListener {
-//                d("RegisterActivity", "Finally we saved the user to Firebase Database")
-//            }
-//            .addOnFailureListener {
-//                d("RegisterActivity", "Failed to set value to database: ${it.message}")
-//            }
-//    }
+    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        d("RegisterActivity","UUID: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        d("RegisterActivity","Ref: $ref")
+
+
+        val user = User(uid, username_edittext_reg.text.toString(), profileImageUrl)
+
+        ref.setValue("hello")
+            .addOnCanceledListener {
+                d("RegisterActivity", "cancelled")
+            }
+            .addOnSuccessListener {
+                d("RegisterActivity", "Finally we saved the user to Firebase Database")
+            }
+            .addOnFailureListener {
+                d("RegisterActivity", "Failed to set value to database: ${it.message}")
+            }
+    }
 
     private fun readTestFirebase() {
         val database = Firebase.database
@@ -106,4 +106,4 @@ class RegisterActivity : AppCompatActivity() {
 
 }
 
-//class User(val uid: String, val username: String, val profileImageUrl: String)
+class User(val uid: String, val username: String, val profileImageUrl: String)
