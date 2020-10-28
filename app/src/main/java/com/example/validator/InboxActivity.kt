@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_inbox.*
 
 class InboxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +16,11 @@ class InboxActivity : AppCompatActivity() {
         setContentView(R.layout.activity_inbox)
 
         verifyUserIsLoggedIn()
+
+        button_inbox.setOnClickListener{
+            val intent = Intent(this, ViewqueryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun verifyUserIsLoggedIn() {
