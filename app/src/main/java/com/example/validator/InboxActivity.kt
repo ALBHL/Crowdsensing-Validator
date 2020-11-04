@@ -21,6 +21,11 @@ class InboxActivity : AppCompatActivity() {
             val intent = Intent(this, ViewqueryActivity::class.java)
             startActivity(intent)
         }
+
+        showImageBtn.setOnClickListener{
+            val intent = Intent(this, ShowImageActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun verifyUserIsLoggedIn() {
