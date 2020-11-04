@@ -1,5 +1,6 @@
 package com.example.validator
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,11 @@ class ShowImageActivity : AppCompatActivity() {
 //        Picasso.get().load(data[0].imageurl).into(imageViewdbRes)
         recyclerViewDetails.layoutManager = LinearLayoutManager(this)
         recyclerViewDetails.adapter = ShowImageAdapter(images)
+
+        ButtonValidation.setOnClickListener {
+            val intent = Intent(this, OutboxActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
 
