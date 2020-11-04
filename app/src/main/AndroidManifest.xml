@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShowImageActivity" />
+        <activity android:name=".ValidateImageActivity" />
         <activity android:name=".ViewqueryActivity" />
         <activity android:name=".OutboxActivity" />
         <activity android:name=".InboxActivity">

@@ -8,12 +8,16 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_inbox.*
 
 class InboxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inbox)
+
+        supportActionBar?.title = "Inbox"
 
         verifyUserIsLoggedIn()
 
@@ -22,10 +26,30 @@ class InboxActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        showImageBtn.setOnClickListener{
-//            val intent = Intent(this, ShowImageActivity::class.java)
-//            startActivity(intent)
-//        }
+        val context = this
+        val db = DataBaseHandler(context)
+        val data = db.readData()
+
+        fetchUsers(data)
+
+    }
+
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
+
+    private fun fetchUsers(data: MutableList<User>) {
+        val adapter = GroupAdapter<ViewHolder>()
+        for (i in 0 until data.size) {
+            adapter.add(UserItem(data[i]))
+        }
+        adapter.setOnItemClickListener { item, view ->
+            val userItem = item as UserItem
+            val intent = Intent(view.context, ValidateImageActivity::class.java)
+            intent.putExtra(USER_KEY, userItem.user.imageurl)
+            startActivity(intent)
+        }
+        recycleview_inbox.adapter = adapter
     }
 
     private fun verifyUserIsLoggedIn() {

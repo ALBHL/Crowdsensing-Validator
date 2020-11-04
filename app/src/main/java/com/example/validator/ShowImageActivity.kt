@@ -25,13 +25,9 @@ class ShowImageActivity : AppCompatActivity() {
         recyclerViewDetails.layoutManager = LinearLayoutManager(this)
         recyclerViewDetails.adapter = images?.let { ShowImageAdapter(it) }
 
-        ButtonValidation.setOnClickListener {
+        ButtonBack.setOnClickListener {
             val intent = Intent(this, OutboxActivity::class.java)
             startActivity(intent)
         }
     }
-}
-
-class HomeFeed {
-
 }

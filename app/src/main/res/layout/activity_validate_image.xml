@@ -8,7 +8,7 @@
     android:background="#FFFFFF">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDetails"
+        android:id="@+id/recyclerViewContents"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -16,13 +16,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonBack"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonValidation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/ButtonBack"
+        android:id="@+id/ButtonValidation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,7 +32,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/rounded_purple_button"
-        android:text="BACK"
+        android:text="VALIDATE"
         android:textColor="#FFFFFF"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
