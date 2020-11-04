@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.images_row.view.*
 
 
 class ShowImageAdapter(val images: String): RecyclerView.Adapter<CustomViewHolder>() {
-    val videoTitles = listOf<String>("Fisrt", "Second")
+    val videoTitles = listOf<String>("Fisrt", "Second", "Third", "Forth", "Fifth")
     val image_urls =  images.replace("\\s+".toRegex(), " ").trim().split(" ")
 
     // number of items

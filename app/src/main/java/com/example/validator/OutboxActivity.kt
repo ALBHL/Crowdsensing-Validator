@@ -18,6 +18,9 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_outbox.*
 import kotlinx.android.synthetic.main.outbox_file_row.*
+import kotlinx.android.synthetic.main.outbox_file_row.view.*
+import java.sql.Array
+import kotlin.reflect.typeOf
 
 class OutboxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,42 +29,30 @@ class OutboxActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Outbox"
 
-        val adapter = GroupAdapter<ViewHolder>()
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        recycleview_outbox.adapter = adapter
+        val context = this
+        val db = DataBaseHandler(context)
+        val data = db.readData()
 
-        fetchUsers()
+        fetchUsers(data)
     }
 
-    private fun fetchUsers() {
-        val ref = FirebaseDatabase.getInstance().reference
-        d("Outbox", "$ref")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(datasnap: DataSnapshot) {
-                d("Outbox", "$ref")
-                datasnap.children.forEach {
-                    d("Outbox", it.toString())
-                }
-//                val adapter = GroupAdapter<ViewHolder>()
-//                p0.children.forEach {
-//                    Log.d("NewMessage", it.toString())
-//                    val user = it.getValue(User::class.java)
-//                    if (user != null) {
-//                        adapter.add(UserItem(user))
-//                    }
-//                }
-//                recyclerview_newmessage.adapter = adapter
-            }
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
 
-            override fun onCancelled(datasnap: DatabaseError) {
-                d("Outbox", "cancelled")
-            }
-        })
+
+    private fun fetchUsers(data: MutableList<User>) {
+        val adapter = GroupAdapter<ViewHolder>()
+        for (i in 0 until data.size) {
+            adapter.add(UserItem(data[i]))
+        }
+        adapter.setOnItemClickListener { item, view ->
+            val userItem = item as UserItem
+            val intent = Intent(view.context, ShowImageActivity::class.java)
+            intent.putExtra(USER_KEY, userItem.user.imageurl)
+            startActivity(intent)
+        }
+        recycleview_outbox.adapter = adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,10 +77,10 @@ class OutboxActivity : AppCompatActivity() {
     }
 }
 
-class UserItem(): Item<ViewHolder>() {
+class UserItem(val user: User): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         // will be called in the list of user object
-//        viewHolder.itemView.username_edittext_reg.text = user.username
+        viewHolder.itemView.outbox_query_title.text = user.name
 //        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
     }
 

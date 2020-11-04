@@ -22,10 +22,10 @@ class InboxActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        showImageBtn.setOnClickListener{
-            val intent = Intent(this, ShowImageActivity::class.java)
-            startActivity(intent)
-        }
+//        showImageBtn.setOnClickListener{
+//            val intent = Intent(this, ShowImageActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
     private fun verifyUserIsLoggedIn() {

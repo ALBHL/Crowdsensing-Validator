@@ -12,6 +12,7 @@ class ShowImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_image)
 
+        val images = intent.getStringExtra(OutboxActivity.USER_KEY)
         val context = this
         val db = DataBaseHandler(context)
         val data = db.readData()
@@ -19,10 +20,10 @@ class ShowImageActivity : AppCompatActivity() {
 //        for (i in 0 until data.size) {
 //            textViewdbResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + "\n")
 //        }
-        val images = data[0].imageurl
+//        val images = data[0].imageurl
 //        Picasso.get().load(data[0].imageurl).into(imageViewdbRes)
         recyclerViewDetails.layoutManager = LinearLayoutManager(this)
-        recyclerViewDetails.adapter = ShowImageAdapter(images)
+        recyclerViewDetails.adapter = images?.let { ShowImageAdapter(it) }
 
         ButtonValidation.setOnClickListener {
             val intent = Intent(this, OutboxActivity::class.java)
