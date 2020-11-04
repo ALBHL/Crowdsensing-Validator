@@ -3,7 +3,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_viewquery.*
-import kotlinx.android.synthetic.main.outbox_file_row.*
 
 class ViewqueryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +15,8 @@ class ViewqueryActivity : AppCompatActivity() {
         btnInsert.setOnClickListener {
             if (editTextName.text.toString().isNotEmpty() &&
                 editTextAge.text.toString().isNotEmpty()) {
-                val user = User(editTextName.text.toString(), editTextAge.text.toString().toInt())
+                val user = User(editTextName.text.toString(), editTextAge.text.toString().toInt(),
+                    "https://static.stalbert.ca/site/assets/files/5087/lions-park_header_2019.-full.jpg https://www.oakville.ca/images/1140-park-albion.jpg")
                 db.insertData(user)
             } else {
                 Toast.makeText(context, "Please fill all datas", Toast.LENGTH_SHORT).show()
@@ -28,16 +28,14 @@ class ViewqueryActivity : AppCompatActivity() {
             val data = db.readData()
             tvResult.text = ""
             for (i in 0 until data.size) {
-                tvResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + "\n")
+                tvResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl + "\n")
             }
         }
-
 
         btn_update.setOnClickListener {
             db.updateData()
             btn_read.performClick()
         }
-
 
         btn_delete.setOnClickListener {
             db.deleteData()
