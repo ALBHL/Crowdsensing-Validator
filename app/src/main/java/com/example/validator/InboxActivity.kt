@@ -37,6 +37,7 @@ class InboxActivity : AppCompatActivity() {
     companion object {
         val USER_KEY = "USER_KEY"
         val ROW_ID = "ROW_ID"
+        val ROW_NAME = "ROW_NAME"
     }
 
     private fun fetchUsers(data: MutableList<User>) {
@@ -49,6 +50,7 @@ class InboxActivity : AppCompatActivity() {
             val intent = Intent(view.context, ValidateImageActivity::class.java)
             intent.putExtra(USER_KEY, userItem.user.imageurl)
             intent.putExtra(ROW_ID, userItem.user.id)
+            intent.putExtra(ROW_NAME, userItem.user.name)
             startActivity(intent)
         }
         recycleview_inbox.adapter = adapter

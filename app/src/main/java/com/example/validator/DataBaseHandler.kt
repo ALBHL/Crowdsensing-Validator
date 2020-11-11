@@ -137,10 +137,9 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         onCreate(db)
     }
 
-    fun deleteInRow(id: String) {
+    fun deleteInRow(name: String) {
         val db = this.writableDatabase
-        d("db111", "I am in")
-        db.delete(TABLEIN_NAME, "$COL_ID=?", arrayOf(id))
+        db.delete(TABLEIN_NAME, "$COL_NAME=?", arrayOf(name))
     }
 
 }

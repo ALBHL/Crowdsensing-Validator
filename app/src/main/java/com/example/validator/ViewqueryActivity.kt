@@ -17,7 +17,7 @@ class ViewqueryActivity : AppCompatActivity() {
                 editTextAge.text.toString().isNotEmpty()) {
                 var user = User(editTextName.text.toString(), editTextAge.text.toString().toInt(),
                     "https://static.stalbert.ca/site/assets/files/5087/lions-park_header_2019.-full.jpg https://www.oakville.ca/images/1140-park-albion.jpg")
-                db.insertData(user)
+                db.insertInData(user)
                 user = User("Take a picture of ** park", 1,
                     "https://static.stalbert.ca/site/assets/files/5087/lions-park_header_2019.-full.jpg https://www.oakville.ca/images/1140-park-albion.jpg")
                 db.insertData(user)

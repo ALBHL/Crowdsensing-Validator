@@ -17,6 +17,7 @@ class ValidateImageActivity : AppCompatActivity() {
 
         val images = intent.getStringExtra(InboxActivity.USER_KEY)
         val cur_id = intent.getStringExtra(InboxActivity.ROW_ID)
+        val cur_name = intent.getStringExtra(InboxActivity.ROW_NAME)
         val context = this
         val db = DataBaseHandler(context)
         val data = db.readInData()
@@ -30,17 +31,22 @@ class ValidateImageActivity : AppCompatActivity() {
         recyclerViewContents.adapter = images?.let { ValidateImageAdapter(it) }
 
         buttonDisapprove.setOnClickListener {
-            db.deleteInRow(cur_id.toString())
-            d("hey?", cur_id.toString())
+            if (cur_name != null) {
+                db.deleteInRow(cur_name)
+            }
             val intent = Intent(this, SuccessValidateActivity::class.java)
             startActivity(intent)
         }
 
         ButtonValidation.setOnClickListener {
-            val user = User("Take a picture of ** park", 1,
-                "https://static.stalbert.ca/site/assets/files/5087/lions-park_header_2019.-full.jpg https://www.oakville.ca/images/1140-park-albion.jpg")
-            db.insertData(user)
-            db.deleteInRow(cur_id.toString())
+            var user = User()
+            if (cur_name != null && images != null) {
+                user = User(cur_name, 1, images)
+                db.insertData(user)
+            }
+            if (cur_name != null) {
+                db.deleteInRow(cur_name)
+            }
             val intent = Intent(this, SuccessValidateActivity::class.java)
             startActivity(intent)
         }
