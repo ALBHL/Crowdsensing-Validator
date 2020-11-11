@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.icu.number.IntegerWidth
 import android.util.Log.d
 import android.widget.Toast
 
@@ -32,7 +33,7 @@ val createTableIn = "CREATE TABLE " + TABLEIN_NAME + " (" +
 
 val dropTableIn = "DROP TABLE IF EXISTS " + TABLEIN_NAME
 
-class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,2) {
+class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,4) {
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createTableIn)
         db?.execSQL(createTable)
@@ -48,7 +49,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         onUpgrade(db, oldVersion, newVersion)
     }
 
-    fun insertData(user : User){
+    fun insertData(user : User){ // add row into the outbox row
         val db = this.writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, user.name)
@@ -62,7 +63,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
     }
 
 
-    fun insertInData(user : User){
+    fun insertInData(user : User){  // add row into the inbox rows
         val db = this.writableDatabase
         val cv = ContentValues()
         cv.put(COL_NAME, user.name)
@@ -134,6 +135,12 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         db?.execSQL(dropTable)
         db?.execSQL(dropTableIn)
         onCreate(db)
+    }
+
+    fun deleteInRow(id: String) {
+        val db = this.writableDatabase
+        d("db111", "I am in")
+        db.delete(TABLEIN_NAME, "$COL_ID=?", arrayOf(id))
     }
 
 }

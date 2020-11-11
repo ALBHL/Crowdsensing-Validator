@@ -35,7 +35,7 @@ class ViewqueryActivity : AppCompatActivity() {
 
 
         btn_read.setOnClickListener {
-            val data = db.readData()
+            val data = db.readInData()
             tvResult.text = ""
             for (i in 0 until data.size) {
                 tvResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl + "\n")
@@ -48,7 +48,7 @@ class ViewqueryActivity : AppCompatActivity() {
         }
 
         btn_delete.setOnClickListener {
-            db.deleteData()
+            db.deleteInRow("7")
             btn_read.performClick()
         }
     }

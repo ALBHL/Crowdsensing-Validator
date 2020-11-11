@@ -13,6 +13,7 @@
         <activity android:name=".ValidateImageActivity" />
         <activity android:name=".ViewqueryActivity" />
         <activity android:name=".OutboxActivity" />
+        <activity android:name=".SuccessValidateActivity" />
         <activity android:name=".InboxActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
