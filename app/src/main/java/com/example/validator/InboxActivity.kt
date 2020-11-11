@@ -28,7 +28,7 @@ class InboxActivity : AppCompatActivity() {
 
         val context = this
         val db = DataBaseHandler(context)
-        val data = db.readData()
+        val data = db.readInData()
 
         fetchUsers(data)
 

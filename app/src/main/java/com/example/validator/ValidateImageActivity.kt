@@ -16,7 +16,7 @@ class ValidateImageActivity : AppCompatActivity() {
         val images = intent.getStringExtra(InboxActivity.USER_KEY)
         val context = this
         val db = DataBaseHandler(context)
-        val data = db.readData()
+        val data = db.readInData()
 
         recyclerViewContents.layoutManager = LinearLayoutManager(this)
         recyclerViewContents.adapter = images?.let { ValidateImageAdapter(it) }
