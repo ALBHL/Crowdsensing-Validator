@@ -16,11 +16,19 @@ val COL_NAME = "name"
 val COL_AGE = "age"
 val COL_ID = "id"
 val COL_URL = "imageurl"
+val COL_PROFILE = "profileimg"
+val COL_COLLECT = "is_collect" // true indicate collected, false indicate waiting to be collected
+val COL_READY = "is_ready"  // true means can be sent to be collected
+val COL_VALIDATE = "is_validate"
 
 val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
         COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
         COL_NAME + " VARCHAR(256)," +
+        COL_COLLECT + " VARCHAR(256)," +
+        COL_READY + " VARCHAR(256)," +
+        COL_VALIDATE + " VARCHAR(256)," +
         COL_AGE + " INTEGER," +
+        COL_PROFILE + " VARCHAR(256)," +
         COL_URL + " VARCHAR(256))"
 
 val dropTable = "DROP TABLE IF EXISTS " + TABLE_NAME
@@ -28,12 +36,16 @@ val dropTable = "DROP TABLE IF EXISTS " + TABLE_NAME
 val createTableIn = "CREATE TABLE " + TABLEIN_NAME + " (" +
         COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
         COL_NAME + " VARCHAR(256)," +
+        COL_COLLECT + " VARCHAR(256)," +
+        COL_READY + " VARCHAR(256)," +
+        COL_VALIDATE + " VARCHAR(256)," +
         COL_AGE + " INTEGER," +
+        COL_PROFILE + " VARCHAR(256)," +
         COL_URL + " VARCHAR(256))"
 
 val dropTableIn = "DROP TABLE IF EXISTS " + TABLEIN_NAME
 
-class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,4) {
+class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,6) {
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createTableIn)
         db?.execSQL(createTable)
@@ -55,6 +67,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         cv.put(COL_NAME, user.name)
         cv.put(COL_AGE, user.age)
         cv.put(COL_URL, user.imageurl)
+        cv.put(COL_PROFILE, user.profileurl)
+        cv.put(COL_COLLECT, "true")
+        cv.put(COL_READY, "true")
+        cv.put(COL_VALIDATE, "true")
         val result = db.insert(TABLE_NAME,null,cv)
         if(result == -1.toLong())
             Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
@@ -69,6 +85,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         cv.put(COL_NAME, user.name)
         cv.put(COL_AGE, user.age)
         cv.put(COL_URL, user.imageurl)
+        cv.put(COL_PROFILE, user.profileurl)
+        cv.put(COL_COLLECT, "true")
+        cv.put(COL_READY, "true")
+        cv.put(COL_VALIDATE, "false")
         val result = db.insert(TABLEIN_NAME,null,cv)
         if(result == -1.toLong())
             Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
@@ -89,6 +109,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
                 user.name = result.getString(result.getColumnIndex(COL_NAME))
                 user.age = result.getString(result.getColumnIndex(COL_AGE)).toInt()
                 user.imageurl = result.getString(result.getColumnIndex(COL_URL))
+                user.ready = result.getString(result.getColumnIndex(COL_READY))
+                user.collect = result.getString(result.getColumnIndex(COL_COLLECT))
+                user.validate = result.getString(result.getColumnIndex(COL_VALIDATE))
+                user.profileurl = result.getString(result.getColumnIndex(COL_PROFILE))
                 list.add(user)
             }while (result.moveToNext())
         }
@@ -112,6 +136,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
                 user.name = result.getString(result.getColumnIndex(COL_NAME))
                 user.age = result.getString(result.getColumnIndex(COL_AGE)).toInt()
                 user.imageurl = result.getString(result.getColumnIndex(COL_URL))
+                user.ready = result.getString(result.getColumnIndex(COL_READY))
+                user.collect = result.getString(result.getColumnIndex(COL_COLLECT))
+                user.validate = result.getString(result.getColumnIndex(COL_VALIDATE))
+                user.profileurl = result.getString(result.getColumnIndex(COL_PROFILE))
                 list.add(user)
             }while (result.moveToNext())
         }
@@ -140,6 +168,13 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
     fun deleteInRow(name: String) {
         val db = this.writableDatabase
         db.delete(TABLEIN_NAME, "$COL_NAME=?", arrayOf(name))
+    }
+
+    fun updateInRow(name: String) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_VALIDATE, "true")
+        db.update(TABLEIN_NAME, cv,"$COL_NAME=?", arrayOf(name))
     }
 
 }

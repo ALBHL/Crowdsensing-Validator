@@ -23,8 +23,10 @@ class ValidateImageActivity : AppCompatActivity() {
         val data = db.readInData()
 
         textview_metadata.text = ""
+        textview_metadata.text = "Inbox\n"
         for (i in 0 until data.size) {
-            textview_metadata.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl + "\n")
+            textview_metadata.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl +
+                    "READY: " + data[i].ready + "COLLECT: " + data[i].collect + "VALIDATE: " + data[i].validate + "\n")
         }
 
         recyclerViewContents.layoutManager = LinearLayoutManager(this)
@@ -32,7 +34,7 @@ class ValidateImageActivity : AppCompatActivity() {
 
         buttonDisapprove.setOnClickListener {
             if (cur_name != null) {
-                db.deleteInRow(cur_name)
+                db.updateInRow(cur_name)
             }
             val intent = Intent(this, SuccessValidateActivity::class.java)
             startActivity(intent)

@@ -36,9 +36,16 @@ class ViewqueryActivity : AppCompatActivity() {
 
         btn_read.setOnClickListener {
             val data = db.readInData()
-            tvResult.text = ""
+            val data2 = db.readData()
+            tvResult.text = "Inbox\n"
             for (i in 0 until data.size) {
-                tvResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl + "\n")
+                tvResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl +
+                        "READY: " + data[i].ready + "COLLECT: " + data[i].collect + "VALIDATE: " + data[i].validate + "\n")
+            }
+            tvResult.append("\nOutbox\n")
+            for (i in 0 until data2.size) {
+                tvResult.append(data2[i].id.toString() + " " + data2[i].name + " " + data2[i].age + data2[i].imageurl +
+                        "READY: " + data2[i].ready + "COLLECT: " + data2[i].collect + "VALIDATE: " + data2[i].validate + "\n")
             }
         }
 

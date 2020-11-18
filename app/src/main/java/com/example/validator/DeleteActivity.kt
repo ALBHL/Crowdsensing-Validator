@@ -12,12 +12,12 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_inbox.*
 
-class InboxActivity : AppCompatActivity() {
+class DeleteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inbox)
 
-        supportActionBar?.title = "Inbox"
+        supportActionBar?.title = "Deleted items"
 
         verifyUserIsLoggedIn()
 
@@ -25,12 +25,6 @@ class InboxActivity : AppCompatActivity() {
             val intent = Intent(this, ViewqueryActivity::class.java)
             startActivity(intent)
         }
-
-        deleteBox.setOnClickListener{
-            val intent = Intent(this, DeleteActivity::class.java)
-            startActivity(intent)
-        }
-
 
         val context = this
         val db = DataBaseHandler(context)
@@ -49,7 +43,7 @@ class InboxActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            if (data[i].validate == "false") {
+            if (data[i].validate == "true") {
                 adapter.add(UserItem(data[i]))
             }
         }

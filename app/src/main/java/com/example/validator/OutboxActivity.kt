@@ -17,6 +17,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_outbox.*
+import kotlinx.android.synthetic.main.images_row.view.*
 import kotlinx.android.synthetic.main.outbox_file_row.*
 import kotlinx.android.synthetic.main.outbox_file_row.view.*
 import java.sql.Array
@@ -82,6 +83,10 @@ class UserItem(val user: User): Item<ViewHolder>() {
         // will be called in the list of user object
         viewHolder.itemView.outbox_query_title.text = user.name
 //        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
+        val imageURL = user.profileurl
+        if (imageURL != "") {
+            Picasso.get().load(imageURL).into(viewHolder.itemView.imageViewprofile)
+        }
     }
 
     override fun getLayout(): Int {
