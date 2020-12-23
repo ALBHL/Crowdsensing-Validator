@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5B69E9"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <EditText
         android:id="@+id/username_edittext_reg"
@@ -13,10 +13,10 @@
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
@@ -54,8 +54,10 @@
         android:id="@+id/register_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rounded_grey_button"
         android:text="Register"
+        android:textColor="#5A5A5A"
         app:layout_constraintEnd_toEndOf="@+id/password_edittext_reg"
         app:layout_constraintStart_toStartOf="@+id/password_edittext_reg"
         app:layout_constraintTop_toBottomOf="@+id/password_edittext_reg" />
@@ -64,10 +66,25 @@
         android:id="@+id/already_have_account_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Already have an account?"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/register_button"
         app:layout_constraintStart_toStartOf="@+id/register_button"
         app:layout_constraintTop_toBottomOf="@+id/register_button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
+        android:text="Register"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/username_edittext_reg"
+        app:layout_constraintEnd_toEndOf="@+id/username_edittext_reg"
+        app:layout_constraintStart_toStartOf="@+id/username_edittext_reg"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
