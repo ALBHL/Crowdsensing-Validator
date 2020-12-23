@@ -28,7 +28,7 @@ class DeleteActivity : AppCompatActivity() {
 
         val context = this
         val db = DataBaseHandler(context)
-        val data = db.readInData()
+        val data = db.readData()
 
         fetchUsers(data)
 
@@ -43,7 +43,7 @@ class DeleteActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            if (data[i].validate == "true") {
+            if (data[i].cur_stage == "deleted") {
                 adapter.add(UserItem(data[i]))
             }
         }

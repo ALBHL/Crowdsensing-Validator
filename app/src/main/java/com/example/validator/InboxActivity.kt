@@ -34,7 +34,7 @@ class InboxActivity : AppCompatActivity() {
 
         val context = this
         val db = DataBaseHandler(context)
-        val data = db.readInData()
+        val data = db.readData()
 
         fetchUsers(data)
 
@@ -49,7 +49,7 @@ class InboxActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            if (data[i].validate == "false") {
+            if (data[i].cur_stage == "ready to be validated") {
                 adapter.add(UserItem(data[i]))
             }
         }
@@ -57,7 +57,7 @@ class InboxActivity : AppCompatActivity() {
             val userItem = item as UserItem
             val intent = Intent(view.context, ValidateImageActivity::class.java)
             intent.putExtra(USER_KEY, userItem.user.imageurl)
-            intent.putExtra(ROW_ID, userItem.user.id)
+            intent.putExtra(ROW_ID, userItem.user.id.toString())
             intent.putExtra(ROW_NAME, userItem.user.name)
             startActivity(intent)
         }

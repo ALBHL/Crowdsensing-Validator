@@ -45,7 +45,9 @@ class OutboxActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            adapter.add(UserItem(data[i]))
+            if (data[i].cur_stage == "validated") {
+                adapter.add(UserItem(data[i]))
+            }
         }
         adapter.setOnItemClickListener { item, view ->
             val userItem = item as UserItem
