@@ -1,11 +1,14 @@
 package com.example.validator
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
@@ -28,6 +31,11 @@ class InboxActivity : AppCompatActivity() {
 
         deleteBox.setOnClickListener{
             val intent = Intent(this, DeleteActivity::class.java)
+            startActivity(intent)
+        }
+
+        button_takepic.setOnClickListener{
+            val intent = Intent(this, CollectorActivity::class.java)
             startActivity(intent)
         }
 

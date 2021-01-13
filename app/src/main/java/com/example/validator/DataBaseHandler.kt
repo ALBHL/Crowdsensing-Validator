@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.number.IntegerWidth
 import android.util.Log.d
 import android.widget.Toast
@@ -17,9 +19,8 @@ val COL_AGE = "age"
 val COL_ID = "id"
 val COL_URL = "imageurl"
 val COL_PROFILE = "profileimg"
-//val COL_COLLECT = "is_collect" // true indicate collected, false indicate waiting to be collected
 val COL_STAGE = "current_stage"  // true means can be sent to be collected
-//val COL_VALIDATE = "is_validate"
+val COL_IMAGE_BIT = "picturetaken"
 
 val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
         COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -37,11 +38,12 @@ val createTableIn = "CREATE TABLE " + TABLEIN_NAME + " (" +
         COL_STAGE + " VARCHAR(256)," +
         COL_AGE + " INTEGER," +
         COL_PROFILE + " VARCHAR(256)," +
-        COL_URL + " VARCHAR(256))"
+        COL_URL + " VARCHAR(256)," +
+        COL_IMAGE_BIT + " BLOB)"
 
 val dropTableIn = "DROP TABLE IF EXISTS " + TABLEIN_NAME
 
-class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,7) {
+class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,9) {
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createTableIn)
         db?.execSQL(createTable)
@@ -75,6 +77,22 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
             Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show()
     }
 
+    fun insertDataImg(user: User, img: ByteArray){  // add row into the inbox rows
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(COL_NAME, user.name)
+        cv.put(COL_AGE, user.age)
+        cv.put(COL_URL, user.imageurl)
+        cv.put(COL_PROFILE, user.profileurl)
+        cv.put(COL_STAGE,  user.cur_stage)
+        cv.put(COL_IMAGE_BIT, img)
+        val result = db.insert(TABLEIN_NAME,null,cv)
+        if(result == -1.toLong())
+            Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show()
+    }
+
 
     fun readData() : MutableList<User>{
         val list : MutableList<User> = ArrayList()
@@ -100,6 +118,21 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context,DATABASE_
         return list
     }
 
+    fun readDataImg(): Bitmap? {
+        val db = this.readableDatabase
+        val query = "Select * from " + TABLEIN_NAME
+        val result = db.rawQuery(query,null)
+        var retblob: ByteArray? = null
+        if(result.moveToFirst()){
+            do {
+                retblob = result.getBlob(result.getColumnIndex(COL_IMAGE_BIT))
+            }while (result.moveToNext())
+        }
+        val bmp = retblob?.size?.let { BitmapFactory.decodeByteArray(retblob, 0, it) }
+        result.close()
+        db.close()
+        return bmp
+    }
 
     fun updateData() {
         val db = this.writableDatabase
