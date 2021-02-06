@@ -1,11 +1,14 @@
 package com.example.validator
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
@@ -31,10 +34,15 @@ class InboxActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        button_takepic.setOnClickListener{
+            val intent = Intent(this, CollectorActivity::class.java)
+            startActivity(intent)
+        }
+
 
         val context = this
         val db = DataBaseHandler(context)
-        val data = db.readInData()
+        val data = db.readData()
 
         fetchUsers(data)
 
@@ -49,7 +57,7 @@ class InboxActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            if (data[i].validate == "false") {
+            if (data[i].cur_stage == "ready to be validated") {
                 adapter.add(UserItem(data[i]))
             }
         }
@@ -57,7 +65,7 @@ class InboxActivity : AppCompatActivity() {
             val userItem = item as UserItem
             val intent = Intent(view.context, ValidateImageActivity::class.java)
             intent.putExtra(USER_KEY, userItem.user.imageurl)
-            intent.putExtra(ROW_ID, userItem.user.id)
+            intent.putExtra(ROW_ID, userItem.user.id.toString())
             intent.putExtra(ROW_NAME, userItem.user.name)
             startActivity(intent)
         }

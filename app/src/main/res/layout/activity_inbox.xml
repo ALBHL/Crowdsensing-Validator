@@ -29,6 +29,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycleview_outbox" />
 
+    <Button
+        android:id="@+id/button_takepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="168dp"
+        android:layout_marginBottom="4dp"
+        android:text="PIC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleview_outbox" />
+
     <ImageButton
         android:id="@+id/deleteBox"
         android:layout_width="wrap_content"
