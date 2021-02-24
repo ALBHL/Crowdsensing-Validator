@@ -26,6 +26,13 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
+        <provider
+            android:name=".AcronymProvider"
+            android:authorities="com.example.validator"
+            android:exported="true"
+            android:multiprocess="true"
+            android:grantUriPermissions="true">
+        </provider>
     </application>
 
     <uses-feature android:name="android.hardware.camera"
