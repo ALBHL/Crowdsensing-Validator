@@ -1,13 +1,13 @@
 package com.example.validator
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.images_row.view.*
 
-class ValidateImageAdapter(val images: String): RecyclerView.Adapter<CustomViewHolder>() {
+class ValidateImageAdapter(val images: String, val bmp: Bitmap): RecyclerView.Adapter<CustomViewHolder>() {
     val videoTitles = listOf<String>("Fisrt", "Second", "Third", "Forth", "Fifth")
     val image_urls =  images.replace("\\s+".toRegex(), " ").trim().split(" ")
 //    var update_urls = ""
@@ -29,7 +29,11 @@ class ValidateImageAdapter(val images: String): RecyclerView.Adapter<CustomViewH
         val imageURL = image_urls.get(position)
 
         holder.view.textViewImageTitle.text = videoTitle
-        Picasso.get().load(imageURL).into(holder.view.imageViewRow)
+        if (position == 0) {
+            holder.view.imageViewRow.setImageBitmap(bmp)
+        } else {
+            Picasso.get().load(imageURL).into(holder.view.imageViewRow)
+        }
 
 //        holder.view.checkImage.setOnCheckedChangeListener() {
 //            val checked: Boolean = holder.view.checkImage.isChecked

@@ -1,5 +1,7 @@
 package com.example.validator
 
+import android.graphics.Bitmap
+
 class User {
 
     var id: Int = 0
@@ -13,6 +15,7 @@ class User {
 //    var collect: String = ""
 //    var validate: String = ""
     var profileurl: String = ""
+    var bmp: Bitmap? = null
 
     constructor(name: String, age: Int, imageurl: String) {
         this.name = name
