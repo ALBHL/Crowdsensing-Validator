@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.images_row.view.*
 
-class ValidateImageAdapter(val images: String, val bmp: Bitmap): RecyclerView.Adapter<CustomViewHolder>() {
+class ValidateImageAdapter(val images: String, val bmp: Bitmap, val ret: String): RecyclerView.Adapter<CustomViewHolder>() {
     val videoTitles = listOf<String>("Fisrt", "Second", "Third", "Forth", "Fifth")
     val image_urls =  images.replace("\\s+".toRegex(), " ").trim().split(" ")
 //    var update_urls = ""
@@ -29,6 +29,7 @@ class ValidateImageAdapter(val images: String, val bmp: Bitmap): RecyclerView.Ad
         val imageURL = image_urls.get(position)
 
         holder.view.textViewImageTitle.text = videoTitle
+        holder.view.textView5.text = ret
         if (position == 0) {
             holder.view.imageViewRow.setImageBitmap(bmp)
         } else {

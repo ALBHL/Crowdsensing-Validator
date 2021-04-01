@@ -22,6 +22,9 @@ class ValidateImageActivity : AppCompatActivity() {
     val COL_PROFILE = "profileimg"
     val COL_STAGE = "current_stage"
     val COL_IMAGE_BIT = "picturetaken"
+    val COL_MODEL = "inf_model"
+    val COL_ITEM = "item_of_interest"
+    val COL_COUNT = "item_count"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +38,11 @@ class ValidateImageActivity : AppCompatActivity() {
 //        val data = db.readData()
 
         val result = contentResolver.query(CONTENT_URI,
-            arrayOf(COL_ID, COL_NAME, COL_STAGE, COL_AGE, COL_PROFILE, COL_URL, COL_IMAGE_BIT),
+            arrayOf(COL_ID, COL_NAME, COL_STAGE, COL_AGE, COL_PROFILE, COL_URL, COL_IMAGE_BIT, COL_MODEL, COL_ITEM, COL_COUNT),
             null, null, null)
         val data = result?.let { readInData(cur_id, it) }
         lateinit var bitmp: Bitmap
+        var inf_ret = ""
 
         textview_metadata.text = ""
         textview_metadata.text = "Inbox\n"
@@ -47,11 +51,12 @@ class ValidateImageActivity : AppCompatActivity() {
                 textview_metadata.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl +
                         "STAGE: " + data[i].cur_stage + "\n")
                 bitmp = data[i].bmp!!
+                inf_ret = data[i].item
             }
         }
 
         recyclerViewContents.layoutManager = LinearLayoutManager(this)
-        recyclerViewContents.adapter = images?.let { ValidateImageAdapter(it, bitmp) }
+        recyclerViewContents.adapter = images?.let { ValidateImageAdapter(it, bitmp, inf_ret) }
 
         buttonDisapprove.setOnClickListener {
 //            if (cur_id != null) {
@@ -84,6 +89,7 @@ class ValidateImageActivity : AppCompatActivity() {
                 user.cur_stage = result.getString(2)
                 user.profileurl = result.getString(4)
                 user.bmp = retblob?.size?.let { BitmapFactory.decodeByteArray(retblob, 0, it) }
+                user.item = result.getString(8)
                 list.add(user)
             }
         }

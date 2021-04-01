@@ -54,6 +54,11 @@ class InboxActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        button_refresh_inbox.setOnClickListener{
+            val intent = Intent(this, InboxActivity::class.java)
+            startActivity(intent)
+        }
+
 
         val context = this
         val db = DataBaseHandler(context)
