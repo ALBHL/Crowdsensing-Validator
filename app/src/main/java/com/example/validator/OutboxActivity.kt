@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_inbox.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_outbox.*
 import kotlinx.android.synthetic.main.images_row.view.*
@@ -29,6 +30,11 @@ class OutboxActivity : AppCompatActivity() {
         setContentView(R.layout.activity_outbox)
 
         supportActionBar?.title = "Outbox"
+
+        button_inferpic.setOnClickListener{
+            val intent = Intent(this, InferencerActivity::class.java)
+            startActivity(intent)
+        }
 
         val context = this
         val db = DataBaseHandler(context)
@@ -45,7 +51,9 @@ class OutboxActivity : AppCompatActivity() {
     private fun fetchUsers(data: MutableList<User>) {
         val adapter = GroupAdapter<ViewHolder>()
         for (i in 0 until data.size) {
-            adapter.add(UserItem(data[i]))
+            if (data[i].cur_stage == "validated") {
+                adapter.add(UserItem(data[i]))
+            }
         }
         adapter.setOnItemClickListener { item, view ->
             val userItem = item as UserItem

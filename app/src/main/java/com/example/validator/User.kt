@@ -1,23 +1,30 @@
 package com.example.validator
 
+import android.graphics.Bitmap
+
 class User {
 
     var id: Int = 0
     var name: String = ""
     var age: Int = 0
     var imageurl: String = ""
-    var ready: String = ""
-    var collect: String = ""
-    var validate: String = ""
+    var cur_stage: String = ""
+    // cur_stage indicate the current stage of the sensing stage:
+    //  we have: 1. ready to be collected, 2. collected 3. inferencer 3. ready to be validated
+    // 4. deleted 5. validated
+//    var collect: String = ""
+//    var validate: String = ""
     var profileurl: String = ""
+    var bmp: Bitmap? = null
+    var item: String = ""
 
     constructor(name: String, age: Int, imageurl: String) {
         this.name = name
         this.age = age
         this.imageurl = imageurl
-        this.ready = "false"
-        this.collect = "false"
-        this.validate = "false"
+        this.cur_stage = "ready to be validated"
+//        this.collect = "false"
+//        this.validate = "false"
         val profiles = listOf<String>("https://i.pinimg.com/originals/52/44/95/524495ccf8c05ab40f5905d852a358c2.png",
             "https://i.pinimg.com/236x/6c/39/9b/6c399b619a43f86c2d5341aacd75702e.jpg",
             "https://i.pinimg.com/564x/69/72/bd/6972bde9f6d0d45d41530c85f8379a88.jpg",
@@ -29,6 +36,7 @@ class User {
             "https://i.pinimg.com/564x/d5/be/82/d5be825883f116248f5cd3a2f58874b1.jpg")
         val ran = (0 until 8).random()
         this.profileurl = profiles[ran]
+        this.item = ""
     }
 
     constructor() {
