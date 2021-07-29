@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
+import com.example.collector.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -50,7 +51,7 @@ class OutboxActivity : AppCompatActivity() {
         adapter.setOnItemClickListener { item, view ->
             val userItem = item as UserItem
             val intent = Intent(view.context, ShowImageActivity::class.java)
-            intent.putExtra(USER_KEY, userItem.user.imageurl)
+            intent.putExtra(USER_KEY, userItem.user.profileurl)
             startActivity(intent)
         }
         recycleview_outbox.adapter = adapter
@@ -81,11 +82,12 @@ class OutboxActivity : AppCompatActivity() {
 class UserItem(val user: User): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         // will be called in the list of user object
-        viewHolder.itemView.outbox_query_title.text = user.name
+        viewHolder.itemView.outbox_query_title.text = user.task_name
+        viewHolder.itemView.outbox_query_description.text = user.task_description
 //        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
-        val imageURL = user.profileurl
-        if (imageURL != "") {
-            Picasso.get().load(imageURL).into(viewHolder.itemView.imageViewprofile)
+        val profileurl = user.profileurl
+        if (profileurl != "") {
+            Picasso.get().load(profileurl).into(viewHolder.itemView.imageViewprofile)
         }
     }
 

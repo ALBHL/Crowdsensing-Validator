@@ -26,10 +26,10 @@ class ValidateImageAdapter(val images: String): RecyclerView.Adapter<CustomViewH
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val videoTitle = videoTitles.get(position)
-        val imageURL = image_urls.get(position)
+        val profileurl = image_urls.get(position)
 
         holder.view.textViewImageTitle.text = videoTitle
-        Picasso.get().load(imageURL).into(holder.view.imageViewRow)
+        Picasso.get().load(profileurl).into(holder.view.imageViewRow)
 
 //        holder.view.checkImage.setOnCheckedChangeListener() {
 //            val checked: Boolean = holder.view.checkImage.isChecked

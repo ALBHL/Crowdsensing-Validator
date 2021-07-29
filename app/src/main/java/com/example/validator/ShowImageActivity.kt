@@ -20,8 +20,8 @@ class ShowImageActivity : AppCompatActivity() {
 //        for (i in 0 until data.size) {
 //            textViewdbResult.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + "\n")
 //        }
-//        val images = data[0].imageurl
-//        Picasso.get().load(data[0].imageurl).into(imageViewdbRes)
+//        val images = data[0].profileurl
+//        Picasso.get().load(data[0].profileurl).into(imageViewdbRes)
         recyclerViewDetails.layoutManager = LinearLayoutManager(this)
         recyclerViewDetails.adapter = images?.let { ShowImageAdapter(it) }
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.example.collector.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
@@ -50,9 +51,9 @@ class DeleteActivity : AppCompatActivity() {
         adapter.setOnItemClickListener { item, view ->
             val userItem = item as UserItem
             val intent = Intent(view.context, ValidateImageActivity::class.java)
-            intent.putExtra(USER_KEY, userItem.user.imageurl)
+            intent.putExtra(USER_KEY, userItem.user.profileurl)
             intent.putExtra(ROW_ID, userItem.user.id)
-            intent.putExtra(ROW_NAME, userItem.user.name)
+            intent.putExtra(ROW_NAME, userItem.user.task_name)
             startActivity(intent)
         }
         recycleview_inbox.adapter = adapter

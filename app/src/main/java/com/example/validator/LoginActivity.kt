@@ -19,26 +19,29 @@ class LoginActivity:AppCompatActivity() {
 
             Log.d("Login", "Attempt login with email/pw: $email/***")
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter email and/or password", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener{
-                    if (!it.isSuccessful) return@addOnCompleteListener
-
-                    // else successful
-                    Log.d("Login", "Successfully create user with uid: ${it.result?.user?.uid}")
-
-                    val intent = Intent(this, InboxActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                }
-                .addOnFailureListener {
-                    Log.d("Login", "Failed to log in: ${it.message}")
-                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
+//            if (email.isEmpty() || password.isEmpty()) {
+//                Toast.makeText(this, "Please enter email and/or password", Toast.LENGTH_SHORT).show()
+//                return@setOnClickListener
+//            }
+//
+//            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener{
+//                    if (!it.isSuccessful) return@addOnCompleteListener
+//
+//                    // else successful
+//                    Log.d("Login", "Successfully create user with uid: ${it.result?.user?.uid}")
+//
+//                    val intent = Intent(this, InboxActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                    startActivity(intent)
+//                }
+//                .addOnFailureListener {
+//                    Log.d("Login", "Failed to log in: ${it.message}")
+//                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+//                }
+            val intent = Intent(this, InboxActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         back_to_register_textview.setOnClickListener{

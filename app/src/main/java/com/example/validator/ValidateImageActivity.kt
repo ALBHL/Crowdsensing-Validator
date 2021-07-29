@@ -3,12 +3,9 @@ package com.example.validator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.d
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_show_image.*
+import com.example.collector.User
 import kotlinx.android.synthetic.main.activity_validate_image.*
-import kotlinx.android.synthetic.main.activity_viewquery.*
 
 class ValidateImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +22,10 @@ class ValidateImageActivity : AppCompatActivity() {
         textview_metadata.text = ""
         textview_metadata.text = "Inbox\n"
         for (i in 0 until data.size) {
-            textview_metadata.append(data[i].id.toString() + " " + data[i].name + " " + data[i].age + data[i].imageurl +
-                    "READY: " + data[i].ready + "COLLECT: " + data[i].collect + "VALIDATE: " + data[i].validate + "\n")
+            textview_metadata.append(
+                data[i].id.toString() + " " + data[i].task_name + " " + data[i].age + data[i].profileurl +
+                        "READY: " + data[i].ready + "COLLECT: " + data[i].collect + "VALIDATE: " + data[i].validate + "\n"
+            )
         }
 
         recyclerViewContents.layoutManager = LinearLayoutManager(this)
@@ -43,7 +42,7 @@ class ValidateImageActivity : AppCompatActivity() {
         ButtonValidation.setOnClickListener {
             var user = User()
             if (cur_name != null && images != null) {
-                user = User(cur_name, 1, images)
+                user = User(null, "1", cur_name, "123", images, 0, "")
                 db.insertData(user)
             }
             if (cur_name != null) {

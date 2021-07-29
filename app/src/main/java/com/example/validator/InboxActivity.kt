@@ -1,16 +1,20 @@
 package com.example.validator
 
+import android.content.ContentResolver
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.example.collector.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_inbox.*
+
 
 class InboxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,24 +23,79 @@ class InboxActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Inbox"
 
-        verifyUserIsLoggedIn()
+        //verifyUserIsLoggedIn()
 
-        button_inbox.setOnClickListener{
+        button_inbox.setOnClickListener {
             val intent = Intent(this, ViewqueryActivity::class.java)
             startActivity(intent)
         }
 
-        deleteBox.setOnClickListener{
-            val intent = Intent(this, DeleteActivity::class.java)
-            startActivity(intent)
+        deleteBox.setOnClickListener {
+//            val intent = Intent(this, DeleteActivity::class.java)
+//            startActivity(intent)
+            val resolver: ContentResolver = contentResolver
+            resolver.delete(AcronymProvider.CONTENT_URI, null, null)
         }
 
+        fetch_inbox.setOnClickListener {
+            val cursor: Cursor? = contentResolver.query(
+                Uri.parse("content://com.example.collector/AcronymProvider/CPInbox"),
+                null,
+                null,
+                null,
+                null
+            )
+
+            Log.d("cursor", cursor.toString())
+            if (cursor!!.moveToFirst()) {
+                val strBuild = StringBuilder()
+                while (!cursor.isAfterLast) {
+                    strBuild.append(
+                        cursor.getString(cursor.getColumnIndex(COL_TASK_ID)) + " " +
+                                cursor.getString(cursor.getColumnIndex(COL_NAME)) + " " +
+                                cursor.getString(cursor.getColumnIndex(COL_TASK_DESCRIPTION)) + " " +
+                                cursor.getString(cursor.getColumnIndex(COL_COUNT)) + " " +
+                                cursor.getString(cursor.getColumnIndex(COL_TEXT)) + " " +
+                                cursor.getString(cursor.getColumnIndex(COL_PROFILE)) + "\n"
+                    )
+                    cursor!!.moveToNext()
+                }
+                Log.d("asdsa", strBuild.toString())
+            }
+        }
 
         val context = this
         val db = DataBaseHandler(context)
         val data = db.readInData()
 
-        fetchUsers(data)
+        val cursor: Cursor? = contentResolver.query(
+            Uri.parse("content://com.example.collector/AcronymProvider/CPInbox"),
+            null,
+            null,
+            null,
+            null
+        )
+
+        val list = ArrayList<User>()
+        Log.d("cursor", cursor.toString())
+        if (cursor!!.moveToFirst()) {
+            val strBuild = StringBuilder()
+            while (!cursor.isAfterLast) {
+                list.add(User(
+                    cursor.getString(cursor.getColumnIndex(COL_PROFILE)),
+                    cursor.getString(cursor.getColumnIndex(COL_TASK_ID)),
+                    cursor.getString(cursor.getColumnIndex(COL_NAME)),
+                    cursor.getString(cursor.getColumnIndex(COL_TASK_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndex(COL_PROFILE)),
+                    cursor.getInt(cursor.getColumnIndex(COL_COUNT)),
+                    cursor.getString(cursor.getColumnIndex(COL_TEXT))
+                ))
+                cursor!!.moveToNext()
+            }
+            Log.d("asdsa", strBuild.toString())
+        }
+
+        fetchUsers(list)
 
     }
 
@@ -58,7 +117,7 @@ class InboxActivity : AppCompatActivity() {
             val intent = Intent(view.context, ValidateImageActivity::class.java)
             intent.putExtra(USER_KEY, userItem.user.imageurl)
             intent.putExtra(ROW_ID, userItem.user.id)
-            intent.putExtra(ROW_NAME, userItem.user.name)
+            intent.putExtra(ROW_NAME, userItem.user.task_name)
             startActivity(intent)
         }
         recycleview_inbox.adapter = adapter
@@ -68,7 +127,8 @@ class InboxActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid
         if (uid == null) {
             val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)    // clear off the back stack
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)    // clear off the back stack
             startActivity(intent)
         }
     }
